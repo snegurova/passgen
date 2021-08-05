@@ -22,3 +22,6 @@
 .mr15 {
   margin-right: 15px;
 }
+.copyBtn {
+  min-width: 100px;
+}

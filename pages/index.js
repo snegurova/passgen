@@ -6,6 +6,7 @@ import generator from  'generate-password';
 export default function Home() {
   
   const [isGenerated, setIsGenerated] = useState(false);
+  const [copyButtonText, setCopyButtonText] = useState('Copy');
   const [passwordValue, setPasswordValue] = useState('');
   const [includeNumbers, setIncludeNumbers] = useState(false);
   const minLength = 6;
@@ -19,6 +20,7 @@ export default function Home() {
     });
     setIsGenerated(true);
     setPasswordValue(password);
+    setCopyButtonText('Copy');
   }
   
   const handlePasswordLength = ({target}) => {
@@ -27,6 +29,14 @@ export default function Home() {
   
   const handleIncludeNumbers = ({target}) => {
     setIncludeNumbers(target.checked);
+  }
+  
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(passwordValue).then(() => {
+      setCopyButtonText('Copied!');
+    }, () => {
+      setCopyButtonText('Failed!');
+    });
   }
   
   const lengthOptions = [];
@@ -61,7 +71,7 @@ export default function Home() {
         </div>
         <div style={ isGenerated ? { display:'block'} : {display : 'none'} }>
           <input type="text" readOnly value={passwordValue}/>
-          <button>Copy</button>
+          <button className={styles.copyBtn} onClick={handleCopyToClipboard}>{copyButtonText}</button>
         </div>
       </main>
 
